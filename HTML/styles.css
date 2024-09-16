@@ -102,3 +102,131 @@ nav a:hover {
 #add-button:hover {
     background-color: #555;
 }
+
+/* Inventory Table Styles */
+.inventory-table {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    font-size: 1.1em;
+}
+
+.inventory-table th, .inventory-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+.inventory-table th {
+    background-color: #444;
+    color: #D1FFBD;
+}
+
+.inventory-table td {
+    background-color: #fff;
+    color: #333;
+}
+
+.inventory-table button {
+    padding: 5px 10px;
+    margin-left: 5px;
+    background-color: #333;
+    color: #D1FFBD;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.inventory-table button:hover {
+    background-color: #555;
+}
+
+/* Form Styles */
+.item-form {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.item-form input {
+    padding: 10px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    font-size: 1.1em;
+    width: 200px;
+}
+
+.item-form button {
+    padding: 10px 20px;
+    background-color: #333;
+    color: #D1FFBD;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.item-form button:hover {
+    background-color: #555;
+}
+
+/* Settings Page Styles */
+section#content {
+    text-align: left;
+}
+
+h2, h3 {
+    color: #333;
+}
+
+label, select, input[type="text"], button {
+    font-size: 1em;
+    margin: 10px 0;
+}
+
+input[type="checkbox"], input[type="radio"] {
+    margin-right: 10px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    border: 2px solid #333;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 300px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #333;
+    color: #D1FFBD;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+ul li {
+    background-color: #D1FFBD;
+    padding: 5px;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+/* Add styles for the sort-category dropdown */
+.sort-category {
+    margin-top: 20px;
+}
+
+.sort-category select {
+    padding: 10px;
+    font-size: 1.1em;
+}
