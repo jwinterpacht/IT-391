@@ -1,71 +1,68 @@
-@import url('https://fonts.googleapis.com/css2?family=Nexa+Light&display=swap');
-
+/* General Styles */
 body {
-    font-family: 'Nexa Light', sans-serif;
-    background-color: #f4f4f9;
+    font-family: 'Playfair Display', serif;
     margin: 0;
     padding: 0;
+    background-color: #D1FFBD; /* Remove most of the white */
+    color: #333;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 header {
-    background-color: #5c6bc0;
-    color: white;
+    background-color: #333;
+    width: 100%;
     padding: 20px;
     text-align: center;
+    color: #D1FFBD;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 3em;
+    font-weight: 700;
 }
 
 nav {
-    background-color: #3949ab;
-    padding: 10px;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: #444;
+    padding: 10px 0;
 }
 
 nav a {
-    color: white;
+    padding: 15px 20px;
+    color: #D1FFBD;
     text-decoration: none;
-    font-size: 18px;
-    padding: 8px 15px;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 1.2em;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 nav a:hover {
-    background-color: #303f9f;
+    background-color: #D1FFBD;
+    color: #333;
     border-radius: 5px;
 }
 
-.container {
-    display: flex;
-    padding: 20px;
+#content {
+    background-color: #fff;
+    padding: 30px;
+    width: 90%;
+    max-width: 1200px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1.2em;
 }
 
-.sidebar {
-    width: 250px;
-    background-color: #e8eaf6;
-    padding: 20px;
-    margin-right: 20px;
-    border-radius: 8px;
-}
-
-.content {
-    flex-grow: 1;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-.grocery-list, .grocery-tracker {
-    margin-bottom: 20px;
-}
-
-.grocery-list h2, .grocery-tracker h2 {
-    color: #3949ab;
-}
-
-.list-item, .grocery-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
+#content p {
+    margin: 0;
+    color: #555;
 }
