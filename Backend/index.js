@@ -40,7 +40,7 @@ app.get('/items', (req, res) => {
   });
 });
 
-/*
+
 // Route to add a new item
 app.post('/items', (req, res) => {
   console.log("Received POST request:", req.body);
@@ -55,28 +55,7 @@ app.post('/items', (req, res) => {
     res.status(201).json({ id: result.insertId, ListItem }); // Send back the inserted item
   });
 });
-*/
 
-// Get a connection from the pool when needed
-app.post('/items', (req, res) => {
-  pool.getConnection((err, connection) => {
-    if (err) {
-      console.error("Error getting database connection:", err);
-      return res.status(500).json({   
- error: err.message });
-    }
-
-    connection.query('INSERT INTO shopping_list (ListItem) VALUES (?)', [req.body.ListItem], (err, result) => {
-      connection.release(); // Always release the connection back to the pool
-
-      if (err) { 
-        console.error("Error inserting into database:", err);
-        return res.status(500).json({ error: err.message });
-      }
-      res.status(201).json({ id: result.insertId, ListItem: req.body.ListItem });
-    });
-  });
-});
 
 // Start the server
 app.listen(port, () => {
