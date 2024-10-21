@@ -46,7 +46,7 @@ function SettingsPage() {
     return (
         <div>
             <header>
-                <h1>Dean's Food List</h1>
+                <h1>Dean's List</h1>
             </header>
 
             <nav>

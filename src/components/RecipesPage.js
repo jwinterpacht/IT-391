@@ -36,7 +36,7 @@ function Recipes({ inventoryItems }) {
     return (
         <div>
             <header>
-                <h1>Dean's Food List - Recipes</h1>
+                <h1>Dean's List - Recipes</h1>
             </header>
 
             <nav>

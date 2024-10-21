@@ -9,7 +9,7 @@ import './App.css'; // Import global CSS
 function App() {
   // Sample inventory data
   const [inventoryItems] = useState([
-    { name: 'Milk', quantity: '1 Liter' },
+    { name: 'Milk', quantity: '3 Liters' },
     { name: 'Eggs', quantity: '12' },
     { name: 'Flour', quantity: '500g' },
   ]);
@@ -18,6 +18,7 @@ function App() {
     <Router>
       <header>
         <h1>Dean's Food List</h1>
+        <h2>Dean's list of food</h2>
         <nav>
           <Link to="/">Home</Link>
           <Link to="/inventory">Inventory</Link>
