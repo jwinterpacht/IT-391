@@ -127,6 +127,63 @@ app.post('/items', authenticateToken, (req, res) => {
   });
 });
 
+
+/*ADDING JADEN'S CODE!! */
+
+// Route to get all items from the inventory table
+app.get('/inventory', (req, res) => {
+  db.query('SELECT * FROM inventory', (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err });
+    }
+    res.json(results);
+  });
+});
+
+// Route to add a new item to the inventory
+app.post('/inventory', (req, res) => {
+  const { item_name, quantity, expiration_date, category, upc_code } = req.body; // Destructure the data from the request body
+  const query = 'INSERT INTO inventory (item_name, quantity, expiration_date, category, upc_code) VALUES (?, ?, ?, ?, ?)';
+  
+  db.query(query, [item_name, quantity, expiration_date, category, upc_code], (err, result) => {
+    if (err) {
+      console.error("Error inserting into inventory table!", err);
+      return res.status(500).json({ error: err.message });
+    }
+    res.status(201).json({ id: result.insertId, item_name, quantity, expiration_date, category, upc_code });
+  });
+});
+
+// Route to delete an item from the inventory by id
+app.delete('/inventory/:id', (req, res) => {
+  const { id } = req.params;
+  const query = 'DELETE FROM inventory WHERE id = ?';
+  
+  db.query(query, [id], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json({ message: 'Item deleted successfully' });
+  });
+});
+
+// Route to update an item in the inventory by id
+app.put('/inventory/:id', (req, res) => {
+  const { id } = req.params;
+  const { item_name, quantity, expiration_date, category, upc_code } = req.body;
+  
+  const query = 'UPDATE inventory SET item_name = ?, quantity = ?, expiration_date = ?, category = ?, upc_code = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?';
+  
+  db.query(query, [item_name, quantity, expiration_date, category, upc_code, id], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json({ message: 'Item updated successfully' });
+  });
+});
+
+/*ADDED JADEN'S CODE!! */
+
 // Start the server
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
