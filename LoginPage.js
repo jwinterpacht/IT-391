@@ -7,12 +7,7 @@ function LoginPage() {
   const [password, setPassword] = useState('');
   const navigate = useNavigate(); // Use useNavigate instead of useHistory
 
-
-
   const handleLogin = async () => {
-
-
-
     console.log("On Login page");
     try {
       const response = await axios.post('http://localhost:3001/login', {
@@ -21,12 +16,12 @@ function LoginPage() {
       });
       // Store the JWT token in local storage
       localStorage.setItem('token', response.data.token);
-      //sessionStorage.setItem('token', response.data.token); //store JWT in session storage, so it resets when the tab or window is closed.
-      //console.log('LoginPage.js: Token stored in sessionStorage:', sessionStorage.getItem('token'));
 
       // Redirect to HomePage
       navigate('/home'); 
-      //navigate('/inventory'); //tried for testing
+      
+      //Force page reload, meaning App.js will reload and the user's logged in/out state should be consistent.
+      window.location.reload();
     } catch (error) {
       console.error('Login failed', error);
       alert('Invalid username or password');
