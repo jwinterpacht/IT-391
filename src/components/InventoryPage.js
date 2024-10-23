@@ -41,8 +41,26 @@ function InventoryPage() {
 
     // Handle adding a new item
     const addItem = (item) => {
-        setItems([...items, item]);
-        setNewItem({ name: '', quantity: '', expiration: '', category: '', upc: '' }); // Clear fields after adding
+        console.log("Adding item from UPC scan:", item); // Log the item being added
+        // Use axios to send a POST request to the backend to add the new item to the inventory table
+        axios.post('http://localhost:3001/inventory', {
+            item_name: item.name,
+            quantity: item.quantity,
+            expiration_date: item.expiration === 'No Expiration' ? null : item.expiration, // Set expiration to null if "No Expiration"
+            category: item.category,
+            upc_code: item.upc
+        })
+        .then(response => {
+            // Update the items state to include the newly added item
+            // setItems([...items, { ...item, id: response.data.id }]);
+            setItems([...items, item]);
+            
+            // Clear the form fields after adding the item
+            setNewItem({ name: '', quantity: '', expiration: '', category: '', upc: '' });
+        })
+        .catch(error => {
+            console.error('Error adding item:', error);
+        });
     };
 
     // Handle sorting by category
@@ -56,9 +74,16 @@ function InventoryPage() {
     };
 
     // Handle deleting an item
-    const deleteItem = (index) => {
-        const newItems = items.filter((_, i) => i !== index);
-        setItems(newItems);
+    const deleteItem = (id) => {
+        // Use axios to send a DELETE request to the backend
+        axios.delete(`http://localhost:3001/inventory/${id}`)
+            .then(() => {
+                // Filter out the deleted item from the current items state
+                setItems(items.filter(item => item.id !== id));
+            })
+            .catch(error => {
+                console.error('Error deleting item:', error);
+            });
     };
 
     // Fetch product details when UPC is manually entered
@@ -115,10 +140,12 @@ function InventoryPage() {
             Quagga.onDetected(async (data) => {
                 if (data && data.codeResult && data.codeResult.code) {
                     const scannedUPCCode = data.codeResult.code;
+                    console.log("UPC Code scanned:", scannedUPCCode); // Log to console for debugging
                     setScannedUPC(scannedUPCCode); // Store the scanned UPC
 
                     // Fetch product details from Open Food Facts API
                     const productDetails = await fetchProductDetails(scannedUPCCode);
+                    console.log("Product details fetched:", productDetails);
 
                     // Automatically add the scanned item to the inventory with product details
                     const scannedItem = {
@@ -157,6 +184,17 @@ function InventoryPage() {
         }
         return 0; // No sorting
     });
+
+    useEffect(() => {
+        // Fetch inventory items from the backend
+        axios.get('http://localhost:3001/inventory')
+            .then(response => {
+                setItems(response.data); // Populate the items state with the data from the backend
+            })
+            .catch(error => {
+                console.error('Error fetching inventory data:', error);
+            });
+    }, []); // Empty dependency array to run this effect only once when the component mounts    
 
     return (
         <div className="inventory-page">
@@ -266,14 +304,14 @@ function InventoryPage() {
                     </thead>
                     <tbody>
                         {sortedItems.map((item, index) => (
-                            <tr key={index}>
-                                <td>{item.name}</td>
+                            <tr key={item.id}>
+                                <td>{item.item_name}</td>
                                 <td>{item.quantity}</td>
-                                <td>{item.expiration}</td>
+                                <td>{item.expiration_date}</td>
                                 <td>{item.category}</td>
-                                <td>{item.upc}</td>
+                                <td>{item.upc_code}</td>
                                 <td>
-                                    <button onClick={() => deleteItem(index)}>Delete</button>
+                                    <button onClick={() => deleteItem(item.id)}>Delete</button>
                                 </td>
                             </tr>
                         ))}

@@ -48,7 +48,7 @@ function HomePage() {
       </nav>
 
       <section id="content">
-        <p>Welcome to Dean's List!</p>
+        <p>Welcome to Dean's Food List!</p>
         
         <div className="quick-entry">
           <input 
