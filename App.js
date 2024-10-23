@@ -53,9 +53,9 @@ function App() {
           <Link to="/inventory">Inventory</Link>
           <Link to="/recipes">Recipes</Link>
           <Link to="/settings">Settings</Link>
-          
+          <Link to="/" onClick={handleLogout}>Logout</Link>
         </nav>
-        <button onClick={handleLogout}>Logout</button>
+        {/* <button onClick={handleLogout}>Logout</button> */}
       </header>
 
       <Routes>
