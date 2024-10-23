@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Link, Navigate, useNavigate } from 'react-router-dom';
+import LoginPage from './components/LoginPage';
+import SignupPage from './components/SignupPage'; // Import SignupPage
 import HomePage from './components/HomePage';
 import InventoryPage from './components/InventoryPage';
 import SettingsPage from './components/SettingsPage';
@@ -14,6 +16,33 @@ function App() {
     { name: 'Flour', quantity: '500g' },
   ]);
 
+
+
+  
+  //When app loads (or any page), check useState of user's logged in state
+  const [isAuthentic, setIsAuthentic] = useState(() => {
+    console.log("initalizd isAuthentic");
+    const token = localStorage.getItem('token');
+    return !!token;
+  })
+
+
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Clear the token when logging out
+    setIsAuthentic(false); // Update the authentication state
+    console.log('User logged out');
+  };
+
+
+  // Function to check if the user is authenticated (if token exists in local storage)
+  const isAuthenticated = () => {
+    const token = localStorage.getItem('token');
+    console.log('AUTHENTICATED!');
+    console.log("isAuthetnic: " + isAuthentic);
+    return !!token && isAuthentic; // Returns true if token is not null or undefined
+  };
+
+
   return (
     <Router>
       <header>
@@ -24,17 +53,25 @@ function App() {
           <Link to="/inventory">Inventory</Link>
           <Link to="/recipes">Recipes</Link>
           <Link to="/settings">Settings</Link>
+          <Link to="/" onClick={handleLogout}>Logout</Link>
         </nav>
+        {/* <button onClick={handleLogout}>Logout</button> */}
       </header>
 
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/inventory" element={<InventoryPage />} />
+        {/* Redirect to the login page if the user is not authenticated */}
+        <Route path="/" element={isAuthenticated() ? <HomePage /> : <Navigate to="/login" />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/signup" element={<SignupPage />} /> {/* Add Signup route */}
+
+        {/* Protect routes to ensure user is logged in */}
+        <Route path="/inventory" element={isAuthenticated() ? <InventoryPage /> : <Navigate to="/login" />} />
         <Route
           path="/recipes"
-          element={<RecipesPage inventoryItems={inventoryItems} />}
+          element={isAuthenticated() ? <RecipesPage inventoryItems={inventoryItems} /> : <Navigate to="/login" />}
         />
-        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/settings" element={isAuthenticated() ? <SettingsPage /> : <Navigate to="/login" />} />
       </Routes>
     </Router>
   );

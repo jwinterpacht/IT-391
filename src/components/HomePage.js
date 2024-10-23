@@ -4,16 +4,31 @@ import axios from 'axios';
 import './HomePage.css'; // Assuming you want to use a separate CSS file
 
 function HomePage() {
+  console.log("on homepage");
   const [inputText, setInputText] = useState(''); // Store textbox value
   const [newItems, setNewItems] = useState([]); // Store the list of items
 
   // Fetch existing items from the database when the component mounts
   useEffect(() => {
-    const fetchItems = async () => {
-      const response = await axios.get('http://localhost:3001/items'); //3000 or 3001?
-      setNewItems(response.data);
-    };
-    fetchItems();
+    // Add token in the Authorization header
+    const token = localStorage.getItem('token');
+    //const token = sessionStorage.getItem('token');
+    
+    if (token) {
+      const fetchItems = async () => {
+        try {
+          const response = await axios.get("http://localhost:3001/items", {
+            headers: { Authorization: `Bearer ${token}` } // Add Bearer before token
+          });
+          setNewItems(response.data); // Store the fetched items
+        } catch (error) {
+          console.error('Error fetching items:', error);
+        }
+      };
+      fetchItems();
+    } else {
+      console.error('No token found, redirecting to login');
+    }
   }, []);
 
   // Handle adding an item
@@ -24,12 +39,15 @@ function HomePage() {
     }
 
     try {
-      const response = await axios.post('http://localhost:3001/items', { ListItem: inputText });
-      console.log("LINE 27 JUST RAN");
+      const token = localStorage.getItem('token');
+      //const token = sessionStorage.getItem('token');
+      console.log('Token stored in sessionStorage:', sessionStorage.getItem('token'));
+      const response = await axios.post('http://localhost:3001/items', { ListItem: inputText }, {
+        headers: { Authorization: `Bearer ${token}` } // Add Bearer before token for POST request
+      });
       setNewItems([...newItems, response.data]); // Update the item list
       setInputText(''); // Clear the input
     } catch (error) {
-      console.log("ERROR CAUGHT");
       console.error('Error adding item:', error);
     }
   };
@@ -71,4 +89,4 @@ function HomePage() {
   );
 }
 
-export default HomePage;
+export default HomePage; // I believe this is why the homepage is the default page when you open Dean's List
