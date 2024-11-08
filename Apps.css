@@ -6,36 +6,62 @@ body {
   background-color: #D1FFBD;
   color: #333;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
   box-sizing: border-box;
 }
 
+/* Main Header */
 header {
   background-color: #333;
   width: 100%;
-  padding: 10px 0; /* Reduced padding */
+  padding: 15px 0;
   text-align: center;
   color: #D1FFBD;
-  position: fixed;
+  position: fixed; /* Fixed position at the top of the page */
   top: 0;
   left: 0;
   z-index: 1000;
+  margin-bottom: 0;
+  transition: top 0.3s ease-in-out; /* Smooth hide/show transition */
+}
+
+header.hidden {
+  top: -100px; /* Move header out of view when hidden */
 }
 
 header h1 {
   margin: 0;
-  font-size: 2rem; /* Reduced font size */
+  font-size: 2.2rem;
   font-weight: 600;
-  font-family: 'Playfair Display', serif;
 }
 
-header h2 {
-  font-size: 1rem; /* Subtitle smaller */
-  margin: 0;
-  font-weight: 400;
+/* Subheader for Navigation */
+.subheader {
+  background-color: #444;
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+  position: fixed; /* Fixed position below the header */
+  top: 60px; /* Place it just below the header */
+  left: 0;
+  z-index: 999;
+  transition: top 0.3s ease-in-out; /* Smooth hide/show transition */
+}
+
+.subheader.hidden {
+  top: -100px; /* Move subheader out of view when hidden */
+}
+
+.subheader nav {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+.subheader nav a {
+  color: #D1FFBD;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
 }
 
 /* Main Content */
@@ -46,7 +72,7 @@ header h2 {
   max-width: 1200px;
   border-radius: 15px;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-  margin-top: 120px; /* Adjusted for smaller header */
+  margin-top: 140px; /* Adjusted for fixed header and subheader */
   text-align: center;
   font-size: 1.2em;
 }
@@ -56,18 +82,15 @@ header h2 {
   color: #555;
 }
 
-/* Adjust padding for smaller screens */
+
+/* Responsive Adjustments */
 @media (max-width: 768px) {
   #content {
     padding: 15px;
   }
 
   header h1 {
-    font-size: 1.8rem; /* Smaller header on mobile */
-  }
-
-  header h2 {
-    font-size: 0.9rem;
+    font-size: 1.8rem;
   }
 }
 
@@ -80,7 +103,9 @@ header h2 {
   margin: 20px 0;
 }
 
-.item-form input, .item-form select, .item-form button {
+.item-form input,
+.item-form select,
+.item-form button {
   padding: 10px;
   border: 2px solid #333;
   border-radius: 5px;
@@ -100,8 +125,53 @@ header h2 {
   background-color: #555;
 }
 
+/* Inventory Table Styles */
+.inventory-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.inventory-table th,
+.inventory-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+  font-size: 1em;
+}
+
+.inventory-table th {
+  background-color: #444;
+  color: #D1FFBD;
+  font-weight: bold;
+}
+
+.inventory-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.inventory-table tr:hover {
+  background-color: #ddd;
+}
+
+.inventory-table td button {
+  background-color: #333;
+  color: #D1FFBD;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.inventory-table td button:hover {
+  background-color: #555;
+}
+
 /* Login and Signup Page Styles */
-.login-container, .signup-container {
+.login-container,
+.signup-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -109,7 +179,8 @@ header h2 {
   background-color: #D1FFBD;
 }
 
-.login-form, .signup-form {
+.login-form,
+.signup-form {
   padding: 20px;
   border-radius: 10px;
   background-color: #fff;
@@ -121,24 +192,25 @@ header h2 {
   align-items: center;
 }
 
-.login-form h1, .signup-form h1 {
+.login-form h1,
+.signup-form h1 {
   margin-bottom: 20px;
   color: #333;
-  font-family: 'Playfair Display', serif;
-  font-size: 1.8rem; /* Reduced heading size */
+  font-size: 1.8rem;
 }
 
-.login-form input, .signup-form input {
+.login-form input,
+.signup-form input {
   width: 90%;
   padding: 10px;
   margin: 10px 0;
   border-radius: 5px;
   border: 2px solid #333;
   font-size: 16px;
-  font-family: 'Playfair Display', serif;
 }
 
-.login-button, .signup-button {
+.login-button,
+.signup-button {
   width: 90%;
   padding: 10px;
   background-color: #333;
@@ -150,11 +222,13 @@ header h2 {
   transition: background-color 0.3s ease;
 }
 
-.login-button:hover, .signup-button:hover {
+.login-button:hover,
+.signup-button:hover {
   background-color: #555;
 }
 
-.login-form p, .signup-form p {
+.login-form p,
+.signup-form p {
   margin-top: 10px;
   color: #333;
 }
@@ -165,7 +239,175 @@ header h2 {
   font-size: 14px;
 }
 
-/* Hiding navigation for login and signup pages */
-.hidden-nav {
-  display: none;
+/* Notification Icon Styling with Higher z-index */
+.notification-icon {
+  position: relative;
+  z-index: 1001; /* Higher than header and subheader */
+  cursor: pointer;
+  display: inline-block;
+  margin-left: 20px;
+  font-size: 1.5rem;
+  color: #D1FFBD;
 }
+.notification-count {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  font-size: 0.8rem;
+}
+
+.notification-dropdown {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  background-color: #333; /* Changed to black */
+  color: #D1FFBD; /* Adjusted color for visibility */
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 200px;
+  z-index: 1000;
+  font-family: 'Playfair Display', serif; /* Ensure consistent font */
+}
+
+.notification-dropdown ul {
+  list-style-type: none;
+  padding: 10px;
+  margin: 0;
+}
+
+.notification-dropdown li {
+  padding: 5px 10px;
+  border-bottom: 1px solid #444; /* Adjusted border for better contrast */
+}
+
+.notification-dropdown li:last-child {
+  border-bottom: none;
+}
+
+.see-all-link {
+  display: block;
+  text-align: center;
+  padding: 10px;
+  background-color: #444;
+  color: #D1FFBD;
+  text-decoration: none;
+}
+
+.see-all-link:hover {
+  background-color: #555;
+}
+.notifications-page {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: 'Playfair Display', serif;
+}
+
+.notifications-page h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.notifications-page ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.notifications-page li {
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f9f9f9;
+  font-size: 1rem;
+}
+
+.notifications-page li.urgent {
+  background-color: #fff3f3;
+  color: #b00;
+  font-weight: bold;
+}
+
+.notifications-page li.read {
+  color: #555;
+}
+
+/* Checkbox and Label Styling */
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.custom-checkbox {
+  display: none; /* Hide the default checkbox */
+}
+
+.checkbox-label {
+  width: 20px;
+  height: 20px;
+  background-color: #333; /* Black box */
+  border-radius: 3px;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.custom-checkbox:checked + .checkbox-label::after {
+  content: '✔';
+  position: absolute;
+  color: #4CAF50; /* Green checkmark */
+  font-size: 16px;
+  left: 3px;
+  top: 0;
+}
+
+
+/* Clear Marked Button */
+.clear-marked-button {
+  background-color: #333;
+  color: #D1FFBD;
+  border: none;
+  padding: 10px;
+  margin-top: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  display: none; /* Hidden by default */
+  width: 100%;
+  text-align: center;
+}
+
+.clear-marked-button.visible {
+  display: block; /* Shown when a notification is marked */
+}
+
+.clear-marked-button:hover {
+  background-color: #555;
+}
+
+/* Mark All as Read Button */
+.mark-all-read-button {
+  background-color: #333;
+  color: #D1FFBD;
+  border: none;
+  padding: 10px;
+  margin-top: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  width: 100%;
+  text-align: center;
+}
+
+.mark-all-read-button:hover {
+  background-color: #555;
+}
+
