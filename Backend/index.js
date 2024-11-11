@@ -7,7 +7,8 @@ const jwt = require('jsonwebtoken'); // for creating and verifying tokens
 require('dotenv').config();
 
 const app = express();
-const port = 3001;
+//const port = 3001;
+const port = 3000;
 const secretKey = 'your_secret_key'; // Use a secure key for signing JWT tokens
 
 app.use(cors());
@@ -16,8 +17,9 @@ app.use(bodyParser.json());
 // MySQL connection
 const db = mysql.createConnection({
   //host: 'deansfoodlist-mysql.serveo.net',
-  host: process.env.DB_HOST || '127.0.0.1',
-  port: 3306,
+  //host: process.env.DB_HOST || '127.0.0.1',
+  host: '127.0.0.1', //localhost for the Pi. Change if moving to a SERVER!!
+  //port: 3306,
   user: 'userteam2',
   password: 'deanPlum2024',
   database: 'deans_db',
@@ -38,6 +40,9 @@ db.connect((err) => {
 // Route to CREATE a new user (signup)
 // not sure if this should be placed, in the code, before or after 'User login route'
 app.post('/signup', async (req, res) => {
+  // debug statement
+  res.status(200).send('Signup successful');
+
   const { username, password } = req.body;
 
   // Check if the username is already taken
